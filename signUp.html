@@ -12,9 +12,25 @@
   <script type="text/javascript" src="<!--引入初始化 Parse 的 js 檔案-->"></script>
   <script  type="text/javascript">
     $(document).on('submit','#signUpForm',function(e){
-      console.log('signUp submit');
+        e.preventDefault();
+      var user = new Parse.User();
+      user.set("username",$('#username').val());
+      user.set("email",$('#email').val());
+      user.set("password",$('#password').val());      
+
       /* 請閱讀完 html 後在這裡填入送出表單後需要執行的程式碼 */
         // 提示1 : 記得使用 preventDefault 方程 避免表單轉址
+      user.signUp(null,{
+        success : function(user){
+          console.log(user);
+          alert("使用者註冊成功");
+          window.location = "index.html";
+        },
+        error : function(error){
+          console.log(error);
+          alert(error.message);
+        }
+      })
 
       /* 結束*/
     });  //endof signUpBtn onSubmit
